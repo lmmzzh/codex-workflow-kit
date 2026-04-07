@@ -155,7 +155,8 @@ your-project/
 
 ## Privacy warning
 
-Do not copy private incident reports, customer data, internal module names, credentials, personal machine paths, or unreleased product strategy into a public repository.
+This repository shares workflow structure, not private project content.
+If you publish your own memory, skill, or handoff files, remove project names, internal module names, machine-local paths, secrets, incident details, and unreleased strategy first.
 Read `docs/privacy-and-redaction-guide.md` before publishing any customized memory or skill content.
 
 ## License

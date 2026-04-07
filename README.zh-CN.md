@@ -139,5 +139,6 @@ your-project/
 
 ## 隐私提醒
 
-不要把私有项目复盘、事故文档、内部模块名、个人机器路径、密钥、未公开产品策略直接放进公开仓库。
-发布前先按 `docs/privacy-and-redaction-guide.md` 做脱敏检查。
+这个仓库开源的是工作流结构，不是私有项目内容。
+如果你准备把自己的 memory、skill 或 handoff 文档也公开出来，发布前请先去掉项目名、内部模块名、本机路径、密钥、事故细节和未公开策略。
+具体可参考 `docs/privacy-and-redaction-guide.md`。
