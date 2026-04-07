@@ -1,5 +1,7 @@
 # codex-workflow-kit
 
+English | [简体中文](./README.zh-CN.md)
+
 A conservative local workflow kit for Codex-style and Claude Code-style coding agents, extracted from real project collaboration practice.
 
 This repository is not an agent runtime, not a model wrapper, and not a fully autonomous coding platform.
