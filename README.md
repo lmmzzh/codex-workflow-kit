@@ -2,6 +2,10 @@
 
 English | [简体中文](./README.zh-CN.md)
 
+A workflow kit that helps coding agents work your way inside real projects.
+
+It turns repeatable project routines into reusable workflows, while keeping boundaries, high-risk decisions, and handoffs explicit.
+
 A conservative local workflow kit for Codex-style and Claude Code-style coding agents, extracted from real project collaboration practice.
 
 This repository is not an agent runtime, not a model wrapper, and not a fully autonomous coding platform.
