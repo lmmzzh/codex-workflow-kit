@@ -11,12 +11,44 @@ A conservative local workflow kit for Codex-style and Claude Code-style coding a
 This repository is not an agent runtime, not a model wrapper, and not a fully autonomous coding platform.
 It is a template kit for developers who want coding agents to reuse stable workflows, respect project boundaries, and produce maintainable handoffs inside real product work.
 
+It is useful when your coding agent keeps running into the same project-level problems:
+
+- It starts coding before the real task boundary is clear.
+- It changes a risky flow when you only asked for a local page or adapter change.
+- It finishes a round of work without leaving enough context for the next session.
+
+The kit's first job is not to make the agent "more autonomous".
+Its first job is to make the first working loop more predictable: clarify the task, preflight risky changes, and leave a handoff.
+
 The first-class target is a dual setup:
 
 - Codex: `AGENTS.md` + `memory/*` + `.agents/skills/*`
 - Claude Code: `CLAUDE.md` + `memory/*` imports + `.claude/skills/*`
 
 The workflow philosophy and skill content are shared; only the runtime entrypoints and skill directories differ.
+
+## 3-minute setup
+
+```sh
+./scripts/init.sh --target /path/to/your-project
+```
+
+The init script will:
+
+1. let you choose `Codex`, `Claude Code`, or `both`
+2. scaffold the minimum workflow files into your project
+3. install the default 3 skills
+4. generate an `INIT-SUMMARY.md` checklist so you know what to confirm manually
+5. generate a `NEXT-PROMPT.md` you can paste into your coding agent for the first project adaptation round
+
+The first version is intentionally conservative:
+
+- it bootstraps a usable draft
+- it does not try to fully understand your product or codebase
+- it keeps high-risk boundaries as human-confirmed input
+
+After setup, open `NEXT-PROMPT.md` in the target project and paste it into Codex or Claude Code.
+That first prompt asks the agent to read the generated workflow files, improve the project-specific memory, and identify risky areas without editing code.
 
 ## Why this exists
 
@@ -80,6 +112,28 @@ Use a three-layer setup:
 3. `skills/` for repeatable task procedures with clear boundaries and outputs, copied into your agent's local skill directory
 
 ## Quick start
+
+### Path A: bootstrap setup
+
+1. Clone this repository locally.
+2. Run:
+
+```sh
+./scripts/init.sh --target /path/to/your-project
+```
+
+3. Review the generated files in your project:
+   - `AGENTS.md` and/or `CLAUDE.md`
+   - `memory/*.md`
+   - `.agents/skills/` or `.claude/skills/`
+   - `INIT-SUMMARY.md`
+   - `NEXT-PROMPT.md`
+4. Confirm guessed build commands, risky areas, and do-not-touch boundaries.
+5. Paste `NEXT-PROMPT.md` into your coding agent and let it adapt the first project-specific memory draft without editing code.
+6. Start with only the default 3 skills.
+7. Run one real task and evaluate whether the flow is already more predictable.
+
+### Path B: manual setup
 
 1. Pick your runtime:
    - Codex
@@ -145,6 +199,8 @@ your-project/
 ## Docs to read first
 
 - `docs/adoption-guide.md`
+- `docs/before-after.md`
+- `docs/case-study-ios-high-risk-flow.md`
 - `docs/why-this-kit-exists.md`
 - `docs/privacy-and-redaction-guide.md`
 - `docs/skill-auto-trigger-validation-checklist.md`

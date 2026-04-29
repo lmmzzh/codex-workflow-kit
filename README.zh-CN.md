@@ -9,12 +9,44 @@
 这个项目不是 agent runtime，不是模型封装器，也不是全自动编程平台。
 它更适合想让编码 Agent **复用稳定工作流、遵守项目边界、稳定产出交接文档** 的开发者，尤其适合真实工程环境下那种“要提效，但不能放任 AI 乱改”的使用方式。
 
+如果你在真实项目里反复遇到这些问题，这套 kit 会更有用：
+
+- AI 上来就写代码，但任务边界还没看清。
+- 你只想改一个局部页面或适配层，AI 却顺手碰了高风险流程。
+- 一轮改完没有 handoff，下一轮又要重新解释上下文。
+
+它第一步不是让 AI “更自治”。
+它第一步是让 AI 的第一轮工作更稳：先看目标和边界，高风险改动先预检，做完以后留下下一轮能接上的交接。
+
 这套模板库默认按“双入口、单套方法论”设计：
 
 - Codex：`AGENTS.md` + `memory/*` + `.agents/skills/*`
 - Claude Code：`CLAUDE.md` + `memory/*` 导入 + `.claude/skills/*`
 
 核心 memory/skill 内容尽量共用，只在入口文件和 skill 目录约定上做轻量适配。
+
+## 3 分钟上手
+
+```sh
+./scripts/init.sh --target /path/to/your-project
+```
+
+这个初始化脚本会：
+
+1. 让你选择 `Codex`、`Claude Code` 或两者都用
+2. 把最小工作流骨架生成到你的项目里
+3. 安装默认 3 个基础 skill
+4. 生成一份 `INIT-SUMMARY.md`，告诉你哪些地方还需要手工确认
+5. 生成一份 `NEXT-PROMPT.md`，你可以直接把它发给 Codex / Claude Code，完成第一轮项目适配
+
+第一版故意收得很克制：
+
+- 先帮你生成一版可用初稿
+- 不假装已经完全理解你的项目
+- 高风险边界仍然由你来确认
+
+初始化完成后，先打开目标项目里的 `NEXT-PROMPT.md`，把里面的内容发给 Codex 或 Claude Code。
+这条提示会要求 AI 先读生成的工作流文件，补齐项目专项记忆，识别高风险区域，并且明确本轮不要改代码。
 
 ## 这个项目解决什么问题
 
@@ -73,6 +105,28 @@
 3. `skills/` 管可重复的任务步骤、边界和输出格式，再按运行时复制到对应 skill 目录
 
 ## 快速开始
+
+### 路径 A：bootstrap 接入
+
+1. 先把这个仓库下载到本地。
+2. 执行：
+
+```sh
+./scripts/init.sh --target /path/to/your-project
+```
+
+3. 查看目标项目里生成的文件：
+   - `AGENTS.md` 和/或 `CLAUDE.md`
+   - `memory/*.md`
+   - `.agents/skills/` 或 `.claude/skills/`
+   - `INIT-SUMMARY.md`
+   - `NEXT-PROMPT.md`
+4. 手工确认脚本猜出的构建命令、高风险区域和不可乱动边界。
+5. 把 `NEXT-PROMPT.md` 发给你的编码 Agent，让它先补项目专项记忆，不改代码。
+6. 第一阶段只保留默认 3 个 skill。
+7. 先跑一个真实任务，看看 AI 的开工、边界和收尾是不是已经更稳。
+
+### 路径 B：手工接入
 
 1. 先决定你的运行时：
    - Codex
@@ -136,6 +190,8 @@ your-project/
 ## 建议先读的文档
 
 - `docs/adoption-guide.md`
+- `docs/before-after.zh-CN.md`
+- `docs/case-study-ios-high-risk-flow.zh-CN.md`
 - `docs/why-this-kit-exists.md`
 - `docs/privacy-and-redaction-guide.md`
 - `docs/skill-auto-trigger-validation-checklist.md`
